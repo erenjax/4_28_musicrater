@@ -46,7 +46,7 @@ export default function App(){
       .finally(() => setLoading(false));
   };
 
-  const average = (item) => {
+  /*const average = (item) => {
     var num = 0;
     var total =0;
     for (var i=0; i<this.state.RatingList.length;i++){
@@ -61,7 +61,7 @@ export default function App(){
     };
     var avg=total/num
     return avg.toFixed(1)
-    };
+    };*/
 
     //same as React App.js
     const refreshList = () => {
@@ -206,7 +206,7 @@ export default function App(){
     };
 
   createItem = () => {
-    const item = { username : "", song : "", artist : "", rating : "", completed : false },
+    const [item] = { username : "", song : "", artist : "", rating : "", completed : false },
     activeItem = item, 
     modal = !modal ;
     };
@@ -228,7 +228,7 @@ export default function App(){
   return (
       <View style={{ flex: 1, padding: 24 }}>
         
-          //Once isLoading == false, show fetched data
+          
           <View 
             style={{
               flex: 1,
@@ -257,8 +257,10 @@ export default function App(){
               {renderItems()}
             </SafeAreaView>
 
+
+
         
-            {/*ENTER SUBMISSION*/}
+            
             {Modal ? (
             <Modal
               activeItem= {activeItem}
@@ -267,15 +269,15 @@ export default function App(){
             />
             ) : null}
 
-            {/*SHOW ERROR MESSAGE IF DUPLICATE SONG ENTERED*/}
+            
             {console.log(isDup)}
             {isDup ? (
-              <p>This song has already been rated!</p>
+              <Text>This song has already been rated!</Text>
             ): null}
 
 
           </View>
-        )
+        
       </View>
     )
-            }
+}
