@@ -86,30 +86,16 @@ export default function App(){
 
     //From React App.js, NEED TO CHANGE HTML CODE TO JSX
 
-    //Should I try to make a playlist function and all songs function
-    //then work with the two tab functions when rendering 
-    const Playlist = () => {
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Playlist</Text>
-        {displayCompleted=true}
-      </View>
-    }
-    const AllSongs = () => {
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>All Songs</Text>
-        {displayCompleted=false}
-      </View>
-    }
-    const Tab = createBottomTabNavigator();
 
     const renderTabList = () => {
       return (
         <div>
             <Text style={styles.instructions}>Playlist</Text>
             <Button
+                className={viewCompleted ? "active" : ""}
                 onPress={() => 
-                    displayCompleted=true}
-                    //className={viewCompleted ? "active" : ""}}
+                    displayCompleted=true
+                    }
                 title="Playlist"
                 color="#841584"
                 accessibilityLabel="Click this button to see playlisted songs"
@@ -117,9 +103,9 @@ export default function App(){
 
             <Text style={styles.instructions}>All Songs</Text>
             <Button
+                className={viewCompleted ? "" : "active"}
                 onPress={() => 
                     displayCompleted=false}
-                    //className={viewCompleted ? "" : "active"}}
                 title="All Songs"
                 color="#841584"
                 accessibilityLabel="Click this button to see all songs"
