@@ -2,7 +2,7 @@
 
 import "react-native-gesture-handler";
 import * as React from "react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {CheckBox, Text, StyleSheet, View, TextInput } from "react-native";
 
 import{
@@ -15,7 +15,7 @@ import{
     FormGroup,
     Input,
     Label,
-} from "reactstrap";
+} from "react-native";
 
 export default function CustomModal() {
   const [activeItem, setActiveItem] = activeItem;
@@ -29,7 +29,7 @@ export default function CustomModal() {
     if (event.target.type === "checkbox") {
         value = event.target.checked;
     }
-    const activeItem = { ...activeItem, name=value };
+    const activeItem = { ...activeItem, name:value };
     activeItem
   };
 

@@ -1,12 +1,12 @@
 //React-native App.js 
 
-import Modal from "./components/Modal.js";
+import Modal from "./components/Modal copy.js";
 import "react-native-gesture-handler";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { 
   FlatList, 
   Text, 
@@ -35,6 +35,7 @@ export default function App(){
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
   const [Modal, setModal] = useState(false);
+  const RatingList = [];
 
   const useEffect = ({}) => {
     //setting up the data 
@@ -90,7 +91,7 @@ export default function App(){
     const renderTabList = () => {
       return (
         <div>
-            <Text style={styles.instructions}>Playlist</Text>
+            <Text style={StyleSheet.instructions}>Playlist</Text>
             <Button
                 className={viewCompleted ? "active" : ""}
                 onPress={() => 
@@ -101,7 +102,7 @@ export default function App(){
                 accessibilityLabel="Click this button to see playlisted songs"
             />
 
-            <Text style={styles.instructions}>All Songs</Text>
+            <Text style={StyleSheet.instructions}>All Songs</Text>
             <Button
                 className={viewCompleted ? "" : "active"}
                 onPress={() => 
@@ -117,7 +118,7 @@ export default function App(){
     //from React App.js, NEED TO CHANGE HTML UI TO JSX
     renderItems = () => {
       console.log("renderItems");
-      const [ viewCompleted ] = useState;
+      const [ viewCompleted ] = useState();
       var newItems = {};
       if (viewCompleted){
        newItems = RatingList.filter(
@@ -143,7 +144,7 @@ export default function App(){
           </span>
           
           <div>
-                <Text style={styles.instructions}>Edit</Text>
+                <Text style={StyleSheet.instructions}>Edit</Text>
                 <Button
                   onPress={() => editItem(item)}
                   title="Edit"
@@ -151,7 +152,7 @@ export default function App(){
                   accessibilityLabel="Edit a rated song"
                 />
               
-                <Text style={styles.instructions}>Delete</Text>
+                <Text style={StyleSheet.instructions}>Delete</Text>
                 <Button
                   onPress={() => handleDelete(item)}
                   title="Delete"
@@ -163,11 +164,11 @@ export default function App(){
       ));
     };
     //From React App.js
-    toggle(() => {
+    toggle=() => {
         setState(() => {
             setModal(!modal);
         });
-    });
+    };
     //this.setState({ modal: !this.state.modal });
 
     //from React App.js
@@ -195,7 +196,7 @@ export default function App(){
           </main>)
       }
       };
-    };
+    
 
     //all from React App.js 
   handleDelete = (item) => {
@@ -205,7 +206,7 @@ export default function App(){
     };
 
   createItem = () => {
-    const item = { username = "", song = "", artist = "", rating = "", completed = false },
+    const item = { username : "", song : "", artist : "", rating : "", completed : false },
     activeItem = item, 
     modal = !modal ;
     };
@@ -226,9 +227,7 @@ export default function App(){
     // Don't need a render funciton, return is for the whole app function
   return (
       <View style={{ flex: 1, padding: 24 }}>
-        {isloading ? (
-          <Text>Loading...</Text>
-        ) : (
+        
           //Once isLoading == false, show fetched data
           <View 
             style={{
@@ -246,7 +245,7 @@ export default function App(){
                 <Text style={StyleSheet.title}>
                   The title and onPress handler are required
                 </Text>
-                <Text style={styles.instructions}>Rate a Song</Text>
+                <Text style={StyleSheet.instructions}>Rate a Song</Text>
                 <Button
                   onPress={() => createItem}
                   title="Playlist"
@@ -254,13 +253,13 @@ export default function App(){
                   accessibilityLabel="Click this button to rate a song!"
                 />
               </View>
-              {rendeTabList()}
+              {renderTabList()}
               {renderItems()}
             </SafeAreaView>
 
         
             {/*ENTER SUBMISSION*/}
-            {modal ? (
+            {Modal ? (
             <Modal
               activeItem= {activeItem}
               toggle={toggle}
@@ -276,6 +275,7 @@ export default function App(){
 
 
           </View>
-        )}
+        )
       </View>
-    );
+    )
+            }
