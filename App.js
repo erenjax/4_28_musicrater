@@ -1,5 +1,6 @@
 //React-native App.js 
 
+import Modal from "./components/Modal.js";
 import "react-native-gesture-handler";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,8 +17,6 @@ import {
   Alert,
  } from "react-native";
 
-//import FinalScreen from "./components/finalScreen";
-//import InitialScreen from "./components/initialScreen";
 import { render } from "react-dom";
 
 export default function App(){
@@ -32,9 +31,10 @@ export default function App(){
 
   const [viewCompleted, setViewCompleted] = useState(false);
   const [isDup, setIsDup] =useState(false);
-  const [activateItem, setActivateItem] = useState("", "", "", "", false);
+  const [activeItem, setActiveItem] = useState("", "", "", "", false);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [Modal, setModal] = useState(false);
 
   const useEffect = ({}) => {
     //setting up the data 
@@ -168,6 +168,7 @@ export default function App(){
             setModal(!modal);
         });
     });
+    //this.setState({ modal: !this.state.modal });
 
     //from React App.js
     handleSubmit = (item) => {
