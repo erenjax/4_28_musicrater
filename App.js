@@ -45,7 +45,7 @@ export default function App(){
       .finally(() => setLoading(false));
   };
 
-  const average = (item) => {
+  /*const average = (item) => {
     var num = 0;
     var total =0;
     for (var i=0; i<this.state.RatingList.length;i++){
@@ -60,7 +60,7 @@ export default function App(){
     };
     var avg=total/num
     return avg.toFixed(1)
-    };
+    };*/
 
     //same as React App.js
     const refreshList = () => {
@@ -255,8 +255,6 @@ export default function App(){
                   accessibilityLabel="Click this button to rate a song!"
                 />
               </View>
-            
-
         
             {Modal ? (
             <Modal
@@ -272,7 +270,7 @@ export default function App(){
             ): null}
             </SafeAreaView>
           </View>
-        )
+        
       </View>
     )
 }
