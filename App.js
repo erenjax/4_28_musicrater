@@ -1,8 +1,5 @@
 //React-native App.js 
 
-
-//
-
 import Modal from "./components/Modal copy.js";
 import "react-native-gesture-handler";
 import * as React from "react";
