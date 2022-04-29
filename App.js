@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   Button,
   StyleSheet,
+  Modal,
  } from "react-native";
 
 
@@ -35,7 +36,7 @@ export default function App(){
   const [isDup, setIsDup] =useState(false);
   const [activeItem, setActiveItem] = useState("", "", "", "", false);
   const [data, setData] = useState([]);
-  //const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
   const [RatingList] = useState([]);
 
   const useEffect = ({}) => {
@@ -70,7 +71,7 @@ export default function App(){
       fetch("http://localhost:8000/api/userrating/")
         .then((res) => {
           const RatingList =res.data;
-          isDup = false;
+          //isDup = false;
         })
         .catch((err)=> {
           console.log(err);
@@ -80,9 +81,9 @@ export default function App(){
     //Same as React App.js
     const displayCompleted = (status) => {
       if (status) {
-        viewCompleted = true;
+        setViewCompleted(true);
         return};
-      viewCompleted = false;
+      setViewCompleted(false);
       return;
     };
 
@@ -123,7 +124,7 @@ export default function App(){
       var newItems = {};
       if (viewCompleted){
        newItems = RatingList.filter(
-        (item) => item.completed === viewCompleted
+        (item) => setCompleted === viewCompleted
         );
       }
       else {
@@ -132,19 +133,19 @@ export default function App(){
 
       return newItems.map((item) => (
         <li
-          key={item.id}
+          key={item}
           className="list-group-item d-flex justify-content-between align-items-center"
         >
-          <span
+          <FlatList
             className={`todo-title mr-2 ${
-              this.state.viewCompleted ? "completed-todo" : ""
+              viewCompleted ? "completed-todo" : ""
             }`}
             title={item.artist}
           >
             {item.song}, {item.artist}, {item.rating}, {this.average(item)}
-          </span>
+          </FlatList>
           
-          <div>
+          <View>
                 <Text style={StyleSheet.instructions}>Edit</Text>
                 <Button
                   onPress={() => editItem(item)}
@@ -160,14 +161,14 @@ export default function App(){
                   color="#841584"
                   accessibilityLabel="Delete a rated song"
                 />
-          </div>
+          </View>
         </li>
       ));
     };
     //From React App.js
   toggle=() => {
         
-      
+      setModal(!modal);
 
     };
     //this.setState({ modal: !this.state.modal });
@@ -175,7 +176,7 @@ export default function App(){
     //from React App.js
   handleSubmit = (item) => {
       console.log("handlteSubmit");
-      this.toggle();
+      toggle();
       if (song) {
         axios
         .put(`http://localhost:8000/api/userrating/${item.song}/`, item)
@@ -186,10 +187,9 @@ export default function App(){
         .post("http://localhost:8000/api/userrating/", item)
         .then((res) => {
           refreshList(),
-          isDup=false})
+          setIsDup(false)})
         .catch((err) => {
-            console.log("catch error"), 
-            isDup=true})
+            console.log("catch error handle Submit")})
         return(
           <main>
             {console.log("notification")}
@@ -207,9 +207,10 @@ export default function App(){
     };
 
   createItem = () => {
-    const {item}  = { username : "", song : "", artist : "", rating : "", completed : false },
-    activeItem = item, 
-    modal=!modal;
+    //const [item]  = useState;
+    setActiveItem(( "", "", "", "", false));
+    setModal(!modal);
+    console.log(modal);
     };
 
   showItem = () => {
@@ -222,8 +223,8 @@ export default function App(){
     };
 
   editItem = (item) => {
-    activeItem = item, 
-    modal = !modal 
+    setActiveItem(item), 
+    setModal(!modal) 
     };
     // Don't need a render funciton, return is for the whole app function
   return (
@@ -257,18 +258,15 @@ export default function App(){
                   color="#841584"
                   accessibilityLabel="Click this button to rate a song!"
                 />
-                
+                <Text> {modal}</Text>
               </View>
               
         
+            {modal ? (<Modal
+              activeItem={setActiveItem()}
+              onSave={handleSubmit()}
+              toggle={toggle()}/>):null}
             
-            <CustomModal username ={username}
-            song={song}
-            artist={artist}
-            rating={rating}
-            activeItem= {activeItem}
-              toggle={toggle()}
-              onSave={handleSubmit()}></CustomModal>
             
 
             

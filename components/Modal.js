@@ -1,6 +1,6 @@
 //Modal.js Original
 
-import "react-native-gesture-handler";
+//import "react-native-gesture-handler";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {CheckBox, Text, StyleSheet, View, TextInput } from "react-native";
@@ -18,14 +18,13 @@ import{
     SafeAreaView,
 } from "react-native";
 
-export function CustomModal(props) {
+export default function CustomModal(props) {
   const [username, setUsername] = useState("");
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
   const [rating, setRating] = useState("");
   const [completed, setCompleted] = useState(false);
   const [activeItem, setActiveItem] = useState(props);
-  //do i need to do anything with props?
   const [isSelected, setSelection] = useState(false);
   const [number, onChangeNumber] = React.useState(null);
   const [text, onChangeText] = React.useState("");
@@ -42,11 +41,11 @@ export function CustomModal(props) {
   const[toggle, onSave]=useState(props);
 
        return(
-          <Modal isOpen={true}>
-          <ModalHeader> Song Rating </ModalHeader>
+          <Modal visible={true} isOpen={true} toggle={toggle()} >
+          <ModalHeader toggle={toggle()} > Song Rating </ModalHeader>
           <ModalBody>
             <Form>
-
+            {console.log("reaching Modal.js")}
               <SafeAreaView>
                 <TextInput 
                   style={StyleSheet.input}
@@ -55,6 +54,7 @@ export function CustomModal(props) {
                   placeholder="username"
                   keyboardType="text"
                 />
+                
                 <TextInput 
                   style={StyleSheet.input}
                   onChangeText={handleChange}
