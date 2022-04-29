@@ -2,11 +2,11 @@
 
 import Modal from "./components/Modal copy.js";
 import "react-native-gesture-handler";
-import * as React from "react";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { 
   FlatList,
   Text,
@@ -15,6 +15,7 @@ import {
   Button,
   StyleSheet,
   Alert,
+  ColorPropType,
  } from "react-native";
 
 import { render } from "react-dom";
@@ -89,7 +90,7 @@ export default function App(){
 
     const renderTabList = () => {
       return (
-        <div>
+        <View>
             <Text style={StyleSheet.instructions}>Playlist</Text>
             <Button
                 className={viewCompleted ? "active" : ""}
@@ -110,7 +111,7 @@ export default function App(){
                 color="#841584"
                 accessibilityLabel="Click this button to see all songs"
             />
-        </div>
+        </View>
       );
     };
 
@@ -233,6 +234,7 @@ export default function App(){
               jusifyContent: "space-between",
             }}
             >
+              
             <SafeAreaView style={StyleSheet.container}>
               <Text style={{ fontSize: 18, color: "green", textAlign: "center" }}>
                 Music Rater
@@ -249,11 +251,12 @@ export default function App(){
                 </Text>
                 <Text style={StyleSheet.instructions}>Rate a Song</Text>
                 <Button
-                  onPress={() => createItem}
-                  title="Playlist"
+                  onPress={() => createItem()}
+                  title="Rate a Song"
                   color="#841584"
                   accessibilityLabel="Click this button to rate a song!"
                 />
+                
               </View>
         
             {Modal ? (
