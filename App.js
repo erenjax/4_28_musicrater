@@ -1,5 +1,8 @@
 //React-native App.js 
 
+
+//
+
 import Modal from "./components/Modal copy.js";
 import "react-native-gesture-handler";
 import * as React from "react";
@@ -8,8 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { useEffect, useState } from "react";
 import { 
-  FlatList, 
-  Text, 
+  FlatList,
+  Text,
   View,
   SafeAreaView,
   Button,
@@ -32,7 +35,6 @@ export default function App(){
   const [viewCompleted, setViewCompleted] = useState(false);
   const [isDup, setIsDup] =useState(false);
   const [activeItem, setActiveItem] = useState("", "", "", "", false);
-  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
   const [Modal, setModal] = useState(false);
   const RatingList = [];
@@ -116,14 +118,14 @@ export default function App(){
     };
 
     //from React App.js, NEED TO CHANGE HTML UI TO JSX
-    renderItems = () => {
+  renderItems = () => {
       console.log("renderItems");
       const [ viewCompleted ] = useState();
       var newItems = {};
       if (viewCompleted){
        newItems = RatingList.filter(
         (item) => item.completed === viewCompleted
-      );
+        );
       }
       else {
          newItems = RatingList;
@@ -164,7 +166,7 @@ export default function App(){
       ));
     };
     //From React App.js
-    toggle=() => {
+  toggle=() => {
         setState(() => {
             setModal(!modal);
         });
@@ -172,7 +174,7 @@ export default function App(){
     //this.setState({ modal: !this.state.modal });
 
     //from React App.js
-    handleSubmit = (item) => {
+  handleSubmit = (item) => {
       console.log("handlteSubmit");
       this.toggle();
       if (item.id) {
@@ -184,8 +186,8 @@ export default function App(){
         axios
         .post("http://localhost:8000/api/userrating/", item)
         .then((res) => {
-          isDup=false,
-          refreshList()})
+          refreshList(),
+          isDup=false})
         .catch((err) => {
             console.log("catch error"), 
             isDup=true})
@@ -194,7 +196,7 @@ export default function App(){
             {console.log("notification")}
             <ReactNotifications>createNotification('error')</ReactNotifications>
           </main>)
-      }
+        }
       };
     
 
@@ -206,7 +208,7 @@ export default function App(){
     };
 
   createItem = () => {
-    const item = { username : "", song : "", artist : "", rating : "", completed : false },
+    const[ item ] = { username : "", song : "", artist : "", rating : "", completed : false },
     activeItem = item, 
     modal = !modal ;
     };
@@ -227,8 +229,6 @@ export default function App(){
     // Don't need a render funciton, return is for the whole app function
   return (
       <View style={{ flex: 1, padding: 24 }}>
-        
-          //Once isLoading == false, show fetched data
           <View 
             style={{
               flex: 1,
@@ -236,12 +236,17 @@ export default function App(){
               jusifyContent: "space-between",
             }}
             >
+            <SafeAreaView style={StyleSheet.container}>
               <Text style={{ fontSize: 18, color: "green", textAlign: "center" }}>
                 Music Rater
               </Text>
 
-            <SafeAreaView style={StyleSheet.container}>
+            
+              {renderTabList()}
+              {renderItems()}
               <View>
+                {/*renderTabList()*/}
+                {/*renderItems()*/}
                 <Text style={StyleSheet.title}>
                   The title and onPress handler are required
                 </Text>
@@ -253,12 +258,9 @@ export default function App(){
                   accessibilityLabel="Click this button to rate a song!"
                 />
               </View>
-              {renderTabList()}
-              {renderItems()}
-            </SafeAreaView>
+            
 
         
-            {/*ENTER SUBMISSION*/}
             {Modal ? (
             <Modal
               activeItem= {activeItem}
@@ -267,15 +269,25 @@ export default function App(){
             />
             ) : null}
 
-            {/*SHOW ERROR MESSAGE IF DUPLICATE SONG ENTERED*/}
             {console.log(isDup)}
             {isDup ? (
-              <p>This song has already been rated!</p>
+              <Text>This song has already been rated!</Text>
             ): null}
-
-
+            </SafeAreaView>
           </View>
         )
       </View>
     )
-            }
+}
+
+const styles = StyleSheet.create({
+  container: {
+     paddingTop: 50,
+     paddingLeft: 50,
+  },
+  stretch: {
+     width: 200,
+     height: 200,
+     resizeMode: 'stretch',
+  }
+});
