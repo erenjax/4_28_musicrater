@@ -15,14 +15,20 @@ import{
     FormGroup,
     Input,
     Label,
+    SafeAreaView,
 } from "react-native";
 
-export default function CustomModal() {
-  const [activeItem, setActiveItem] = activeItem;
+export function CustomModal(props) {
+  const [username, setUsername] = useState("");
+  const [song, setSong] = useState("");
+  const [artist, setArtist] = useState("");
+  const [rating, setRating] = useState("");
+  const [completed, setCompleted] = useState(false);
+  const [activeItem, setActiveItem] = useState(props);
   //do i need to do anything with props?
   const [isSelected, setSelection] = useState(false);
   const [number, onChangeNumber] = React.useState(null);
-  const [text, onChangeText] = React.useState("Useless Text");
+  const [text, onChangeText] = React.useState("");
 
   handleChange = (event) => {
     let { name, value } = event.target;
@@ -30,61 +36,63 @@ export default function CustomModal() {
         value = event.target.checked;
     }
     const activeItem = { ...activeItem, name:value };
-    activeItem
+    setActiveItem(props);
   };
 
+  const[toggle, onSave]=useState(props);
+
        return(
-          <Modal isOpen={true} toggle={toggle}>
-          <ModalHeader toggle={toggle}> Song Rating </ModalHeader>
+          <Modal isOpen={true}>
+          <ModalHeader> Song Rating </ModalHeader>
           <ModalBody>
             <Form>
 
               <SafeAreaView>
                 <TextInput 
-                  style={styles.input}
+                  style={StyleSheet.input}
                   onChangeText={handleChange}
-                  value={activeItem.username}
+                  value={username}
                   placeholder="username"
                   keyboardType="text"
                 />
                 <TextInput 
-                  style={styles.input}
+                  style={StyleSheet.input}
                   onChangeText={handleChange}
-                  value={activeItem.song}
+                  value={song}
                   placeholder="song"
                   keyboardType="text"
                 />
                 <TextInput 
-                  style={styles.input}
+                  style={StyleSheet.input}
                   onChangeText={handleChange}
-                  value={activeItem.artist}
+                  value={artist}
                   placeholder="artist"
                   keyboardType="text"
                 />
                 <TextInput 
-                  style={styles.input}
+                  style={StyleSheet.input}
                   onChangeText={handleChange}
-                  value={activeItem.rating}
+                  value={rating}
                   placeholder="rating"
                   keyboardType="numeric"
                 />
               </SafeAreaView>
 
-              <View style={styles.container}>
-                <View style={styles.checkboxContainer}>
+              <View style={StyleSheet.container}>
+                <View style={StyleSheet.checkboxContainer}>
                   <checkboxContainer
                     value={isSelected}
                     onValueChange={setSelection}
-                    style={styles.checkbox}
+                    style={StyleSheet.checkbox}
                     />
-                    <Text style={styles.label}>Add to Playlist</Text>
+                    <Text style={StyleSheet.label}>Add to Playlist</Text>
                 </View>
               </View>
 
           </Form>
           </ModalBody>
         <ModalFooter>
-        <Text style={styles.instructions}>Save</Text>
+        <Text style={StyleSheet.instructions}>Save</Text>
                 <Button
                   onPress={() => onSave(activeItem)}
                   title="Save"

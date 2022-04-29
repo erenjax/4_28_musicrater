@@ -1,30 +1,31 @@
 //React-native App.js 
 
-import Modal from "./components/Modal copy.js";
+import CustomModal from "./components/Modal.js";
+
 import "react-native-gesture-handler";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+//import { NavigationContainer } from "@react-navigation/native";
+//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import React, { useEffect, useState } from "react";
-import { 
-  FlatList,
+import axios from "axios";
+import {
   Text,
   View,
   SafeAreaView,
   Button,
   StyleSheet,
-  Alert,
-  ColorPropType,
  } from "react-native";
 
-import { render } from "react-dom";
+
+
+
 
 export default function App(){
   //const [viewCompleted, isDup, setState] = useState(false, false, "", "", "", "", false);
   //const [song, artist, rating, completed, activateItem, setState] = useState("", "", "", "", false);
 
-  const [username, setUsername] = ("");
+  const [username, setUsername] = useState("");
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
   const [rating, setRating] = useState("");
@@ -34,12 +35,12 @@ export default function App(){
   const [isDup, setIsDup] =useState(false);
   const [activeItem, setActiveItem] = useState("", "", "", "", false);
   const [data, setData] = useState([]);
-  const [Modal, setModal] = useState(false);
-  const RatingList = [];
+  //const [modal, setModal] = useState(false);
+  const [RatingList] = useState([]);
 
   const useEffect = ({}) => {
     //setting up the data 
-    fetch("http://localhost:8000/api/userrating/data.json")
+    fetch("http://localhost:8000/api/userrating/")
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
@@ -165,9 +166,9 @@ export default function App(){
     };
     //From React App.js
   toggle=() => {
-        setState(() => {
-            setModal(!modal);
-        });
+        
+      
+
     };
     //this.setState({ modal: !this.state.modal });
 
@@ -175,9 +176,9 @@ export default function App(){
   handleSubmit = (item) => {
       console.log("handlteSubmit");
       this.toggle();
-      if (item.id) {
+      if (song) {
         axios
-        .put(`http://localhost:8000/api/userrating/${item.id}/`, item)
+        .put(`http://localhost:8000/api/userrating/${item.song}/`, item)
         .then((res) => refreshList())
         return;
       } else {
@@ -192,7 +193,7 @@ export default function App(){
         return(
           <main>
             {console.log("notification")}
-            <ReactNotifications>createNotification('error')</ReactNotifications>
+            
           </main>)
         }
       };
@@ -206,9 +207,9 @@ export default function App(){
     };
 
   createItem = () => {
-    const[ item ] = { username : "", song : "", artist : "", rating : "", completed : false },
+    const {item}  = { username : "", song : "", artist : "", rating : "", completed : false },
     activeItem = item, 
-    modal = !modal ;
+    modal=!modal;
     };
 
   showItem = () => {
@@ -258,19 +259,19 @@ export default function App(){
                 />
                 
               </View>
+              
         
-            {Modal ? (
-            <Modal
-              activeItem= {activeItem}
-              toggle={toggle}
-              onSave={handleSubmit}
-            />
-            ) : null}
+            
+            <CustomModal username ={username}
+            song={song}
+            artist={artist}
+            rating={rating}
+            activeItem= {activeItem}
+              toggle={toggle()}
+              onSave={handleSubmit()}></CustomModal>
+            
 
-            {console.log(isDup)}
-            {isDup ? (
-              <Text>This song has already been rated!</Text>
-            ): null}
+            
             </SafeAreaView>
           </View>
         
