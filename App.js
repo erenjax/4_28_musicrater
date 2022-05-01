@@ -19,7 +19,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
   TextInput,
  } from "react-native";
 
@@ -85,7 +84,7 @@ export default function App(){
     };
 
     //Same as React App.js
-    var displayCompleted = (status) => {
+    const displayCompleted = (status) => {
       if (status) {
         setViewCompleted(true);
         return};
@@ -181,14 +180,14 @@ export default function App(){
 
     //from React App.js
   handleSubmit = (item) => {
-      console.log("handlteSubmit");
+      console.log({item});
       toggle();
-      if (song) {
+      {/*if (song) {
         axios
-        .put(`http://localhost:8000/api/userrating/${item.song}/`, item)
+        .put(`http://localhost:8000/api/userrating/${song}/`, item)
         .then((res) => refreshList())
         return;
-      } else {
+      } else {*/}
         axios
         .post("http://localhost:8000/api/userrating/", item)
         .then((res) => {
@@ -196,13 +195,9 @@ export default function App(){
           setIsDup(false)})
         .catch((err) => {
             console.log("catch error handle Submit")})
-        return(
-          <main>
-            {console.log("notification")}
-            
-          </main>)
-        }
-      };
+        
+        };
+      
     
 
     //all from React App.js 
@@ -233,13 +228,16 @@ export default function App(){
     setModal(!modal) 
     };
 
-    handleChange = (event) => {
-      let { name, value } = event.target;
-      if (event.target.type === "checkbox") {
-          value = event.target.checked;
-      }
-      const activeItem = { ...activeItem, name:value };
-      setActiveItem(props);
+    handleChange = (text) => {
+      let {name, value} = text;
+        if (text === "checkbox") {
+            value=text.checked;
+        }
+    
+
+        const activeItem={...activeItem, [name]:value};
+
+        setActiveItem({activeItem});
     };
     // Don't need a render funciton, return is for the whole app function
   return (
@@ -272,83 +270,58 @@ export default function App(){
                   color="#841584"
                   accessibilityLabel="Click this button to rate a song!"
                 />
-                <Text> {modal}</Text>
+                
               </View>
               
-            {/*
-            {modal ? (<Modal
-              activeItem={setActiveItem()}
-              onSave={handleSubmit()}
-              toggle={toggle()}/>):null}
-            */}
-            {modal ? (
+            
+            {modal ?  
+            <><View>
+              {console.log("reaching Modal.js")}
+
+              <TextInput
+                style={StyleSheet.input}
+                onChangeText={setUsername}
+                value={username}
+                keyboardType="default"
+                placeholder="username"
+                 />
+
+              <TextInput
+                style={StyleSheet.input}
+                onChangeText={setSong}
+                value={song}
+                placeholder="song"
+                keyboardType="default" />
+              <TextInput
+                style={StyleSheet.input}
+                onChangeText={setArtist}
+                value={artist}
+                placeholder="artist"
+                keyboardType="default" />
+              <TextInput
+                style={StyleSheet.input}
+                onChangeText={setRating}
+                value={rating}
+                placeholder="rating"
+                keyboardType="numeric" />
+
+              
+              
+            </View><Text style={StyleSheet.instructions}>Save</Text><Button
+                onPress={()=>handleSubmit(activeItem)}
+                title="Save"
+                color="#841584"
+                accessibilityLabel="Click this button to submit your song rating" /></>
+           
+      
+            
+             :null}
           
-          <Modal visible={true} isOpen={true} toggle={toggle()} >
-          <ModalHeader toggle={toggle()} > Song Rating </ModalHeader>
-          <ModalBody>
-            <Form>
-            {console.log("reaching Modal.js")}
-              <SafeAreaView>
-                <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
-                  value={username}
-                  placeholder="username"
-                  keyboardType="text"
-                />
-                
-                <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
-                  value={song}
-                  placeholder="song"
-                  keyboardType="text"
-                />
-                <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
-                  value={artist}
-                  placeholder="artist"
-                  keyboardType="text"
-                />
-                <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
-                  value={rating}
-                  placeholder="rating"
-                  keyboardType="numeric"
-                />
+      
+            
+
+            
               </SafeAreaView>
-
-              <View style={StyleSheet.container}>
-                <View style={StyleSheet.checkboxContainer}>
-                  <checkboxContainer
-                    value={isSelected}
-                    onValueChange={setSelection}
-                    style={StyleSheet.checkbox}
-                    />
-                    <Text style={StyleSheet.label}>Add to Playlist</Text>
-                </View>
-              </View>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Text style={StyleSheet.instructions}>Save</Text>
-                <Button
-                  onPress={() => onSave(activeItem)}
-                  title="Save"
-                  color="#841584"
-                  accessibilityLabel="Click this button to submit your song rating"
-                />
-          </ModalFooter>
-      </Modal>)
-      : null}
-            
-            
-            
-
-            
-            </SafeAreaView>
           </View>
         
       </View>
