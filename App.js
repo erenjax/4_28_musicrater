@@ -1,6 +1,6 @@
 //React-native App.js 
 
-import CustomModal from "./components/Modal.js";
+import Modal from "./components/Modal.js";
 
 import "react-native-gesture-handler";
 
@@ -15,7 +15,6 @@ import {
   SafeAreaView,
   Button,
   StyleSheet,
-  Modal,
  } from "react-native";
 
 
@@ -226,6 +225,15 @@ export default function App(){
     setActiveItem(item), 
     setModal(!modal) 
     };
+
+    handleChange = (event) => {
+      let { name, value } = event.target;
+      if (event.target.type === "checkbox") {
+          value = event.target.checked;
+      }
+      const activeItem = { ...activeItem, name:value };
+      setActiveItem(props);
+    };
     // Don't need a render funciton, return is for the whole app function
   return (
       <View style={{ flex: 1, padding: 24 }}>
@@ -261,11 +269,74 @@ export default function App(){
                 <Text> {modal}</Text>
               </View>
               
-        
+            {/*
             {modal ? (<Modal
               activeItem={setActiveItem()}
               onSave={handleSubmit()}
               toggle={toggle()}/>):null}
+            */}
+            {modal ? (
+          
+          <Modal visible={true} isOpen={true} toggle={toggle()} >
+          <ModalHeader toggle={toggle()} > Song Rating </ModalHeader>
+          <ModalBody>
+            <Form>
+            {console.log("reaching Modal.js")}
+              <SafeAreaView>
+                <TextInput 
+                  style={StyleSheet.input}
+                  onChangeText={handleChange}
+                  value={username}
+                  placeholder="username"
+                  keyboardType="text"
+                />
+                
+                <TextInput 
+                  style={StyleSheet.input}
+                  onChangeText={handleChange}
+                  value={song}
+                  placeholder="song"
+                  keyboardType="text"
+                />
+                <TextInput 
+                  style={StyleSheet.input}
+                  onChangeText={handleChange}
+                  value={artist}
+                  placeholder="artist"
+                  keyboardType="text"
+                />
+                <TextInput 
+                  style={StyleSheet.input}
+                  onChangeText={handleChange}
+                  value={rating}
+                  placeholder="rating"
+                  keyboardType="numeric"
+                />
+              </SafeAreaView>
+
+              <View style={StyleSheet.container}>
+                <View style={StyleSheet.checkboxContainer}>
+                  <checkboxContainer
+                    value={isSelected}
+                    onValueChange={setSelection}
+                    style={StyleSheet.checkbox}
+                    />
+                    <Text style={StyleSheet.label}>Add to Playlist</Text>
+                </View>
+              </View>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Text style={StyleSheet.instructions}>Save</Text>
+                <Button
+                  onPress={() => onSave(activeItem)}
+                  title="Save"
+                  color="#841584"
+                  accessibilityLabel="Click this button to submit your song rating"
+                />
+          </ModalFooter>
+      </Modal>)
+      : null}
             
             
 
@@ -276,15 +347,3 @@ export default function App(){
       </View>
     )
 }
-
-const styles = StyleSheet.create({
-  container: {
-     paddingTop: 50,
-     paddingLeft: 50,
-  },
-  stretch: {
-     width: 200,
-     height: 200,
-     resizeMode: 'stretch',
-  }
-});

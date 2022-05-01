@@ -1,9 +1,9 @@
 //Modal.js Original
 
-//import "react-native-gesture-handler";
+import "react-native-gesture-handler";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import {CheckBox, Text, StyleSheet, View, TextInput } from "react-native";
+import {CheckBox, Text, StyleSheet, View, TextInput, SafeAreaView } from "react-native";
 
 import{
     Button,
@@ -15,84 +15,75 @@ import{
     FormGroup,
     Input,
     Label,
-    SafeAreaView,
 } from "react-native";
 
-export default function CustomModal(props) {
-  const [username, setUsername] = useState("");
-  const [song, setSong] = useState("");
-  const [artist, setArtist] = useState("");
-  const [rating, setRating] = useState("");
-  const [completed, setCompleted] = useState(false);
-  const [activeItem, setActiveItem] = useState(props);
+export default function CustomModal(prop) {
+  const [activeItem, setActiveItem] = useState(prop);
   const [isSelected, setSelection] = useState(false);
   const [number, onChangeNumber] = React.useState(null);
   const [text, onChangeText] = React.useState("");
 
-  handleChange = (event) => {
+   handleChange = (event) => {
     let { name, value } = event.target;
     if (event.target.type === "checkbox") {
         value = event.target.checked;
     }
     const activeItem = { ...activeItem, name:value };
-    setActiveItem(props);
-  };
-
-  const[toggle, onSave]=useState(props);
+    setActiveItem(prop)
+  }
+  const [toggle, onSave] = useState(prop);
 
        return(
-          <Modal visible={true} isOpen={true} toggle={toggle()} >
-          <ModalHeader toggle={toggle()} > Song Rating </ModalHeader>
+          <Modal isOpen={true} toggle={toggle}>
+          <ModalHeader toggle={toggle}> Song Rating </ModalHeader>
           <ModalBody>
             <Form>
-            {console.log("reaching Modal.js")}
               <SafeAreaView>
                 <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
+                  style={styles.input}
+                  onChangeText={handleChange()}
                   value={username}
                   placeholder="username"
                   keyboardType="text"
                 />
-                
                 <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
-                  value={song}
+                  style={styles.input}
+                  onChangeText={handleChange()}
+                  value={activeItem.song}
                   placeholder="song"
                   keyboardType="text"
                 />
                 <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
-                  value={artist}
+                  style={styles.input}
+                  onChangeText={handleChange()}
+                  value={activeItem.artist}
                   placeholder="artist"
                   keyboardType="text"
                 />
                 <TextInput 
-                  style={StyleSheet.input}
-                  onChangeText={handleChange}
-                  value={rating}
+                  style={styles.input}
+                  onChangeText={handleChange()}
+                  value={activeItem.rating}
                   placeholder="rating"
                   keyboardType="numeric"
                 />
               </SafeAreaView>
 
-              <View style={StyleSheet.container}>
-                <View style={StyleSheet.checkboxContainer}>
+              <View style={styles.container}>
+                <View style={styles.checkboxContainer}>
                   <checkboxContainer
                     value={isSelected}
                     onValueChange={setSelection}
-                    style={StyleSheet.checkbox}
+                    style={styles.checkbox}
                     />
-                    <Text style={StyleSheet.label}>Add to Playlist</Text>
+                    <Text style={styles.label}>Add to Playlist</Text>
                 </View>
               </View>
 
           </Form>
           </ModalBody>
         <ModalFooter>
-        <Text style={StyleSheet.instructions}>Save</Text>
+        <Text style={styles.instructions}>Save</Text>
                 <Button
                   onPress={() => onSave(activeItem)}
                   title="Save"
@@ -102,16 +93,3 @@ export default function CustomModal(props) {
           </ModalFooter>
       </Modal>
     )};
-
-
-    const styles = StyleSheet.create({
-      container: {
-         paddingTop: 50,
-         paddingLeft: 50,
-      },
-      stretch: {
-         width: 200,
-         height: 200,
-         resizeMode: 'stretch',
-      }
-    });
