@@ -1,6 +1,6 @@
 //React-native App.js 
 
-import CustomModal from "./components/Modal";
+
 
 import "react-native-gesture-handler";
 
@@ -15,6 +15,12 @@ import {
   SafeAreaView,
   Button,
   StyleSheet,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  TextInput,
  } from "react-native";
 
 
@@ -32,6 +38,7 @@ export default function App(){
   const [completed, setCompleted] = useState(false);
 
   const [viewCompleted, setViewCompleted] = useState(false);
+  const [isSelected, setSelection] = useState(false);
   const [isDup, setIsDup] =useState(false);
   const [activeItem, setActiveItem] = useState("", "", "", "", false);
   const [data, setData] = useState([]);
@@ -337,12 +344,7 @@ export default function App(){
       </Modal>)
       : null}
             
-            {modal ? (<CustomModal
-              activeItem={activeItem}
-              toggle={toggle}
-              onSave={handleSubmit}
-              
-              />):null}
+            
             
 
             
