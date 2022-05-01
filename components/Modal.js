@@ -1,11 +1,11 @@
 //Modal.js Original
 
-//import "react-native-gesture-handler";
+import "react-native-gesture-handler";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import {CheckBox, Text, StyleSheet, View, TextInput } from "react-native";
 
 import{
+  CheckBox, Text, StyleSheet, View, TextInput,
     Button,
     Modal,
     ModalHeader,
@@ -29,7 +29,7 @@ export default function CustomModal(props) {
   const [number, onChangeNumber] = React.useState(null);
   const [text, onChangeText] = React.useState("");
 
-  handleChange = (event) => {
+  const handleChange = (event) => {
     let { name, value } = event.target;
     if (event.target.type === "checkbox") {
         value = event.target.checked;
@@ -41,8 +41,8 @@ export default function CustomModal(props) {
   const[toggle, onSave]=useState(props);
 
        return(
-          <Modal visible={true} isOpen={true} toggle={toggle()} >
-          <ModalHeader toggle={toggle()} > Song Rating </ModalHeader>
+          <Modal visible={true} isOpen={true} toggle={toggle} >
+          <ModalHeader toggle={toggle} > Song Rating </ModalHeader>
           <ModalBody>
             <Form>
             {console.log("reaching Modal.js")}

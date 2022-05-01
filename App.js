@@ -1,11 +1,11 @@
 //React-native App.js 
 
-import CustomModal from "./components/Modal.js";
+import CustomModal from "./components/Modal";
 
 import "react-native-gesture-handler";
 
-//import { NavigationContainer } from "@react-navigation/native";
-//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -79,7 +79,7 @@ export default function App(){
     };
 
     //Same as React App.js
-    const displayCompleted = (status) => {
+    var displayCompleted = (status) => {
       if (status) {
         setViewCompleted(true);
         return};
@@ -97,7 +97,7 @@ export default function App(){
             <Button
                 className={viewCompleted ? "active" : ""}
                 onPress={() => 
-                    displayCompleted=true
+                    displayCompleted(true)
                     }
                 title="Playlist"
                 color="#841584"
@@ -108,7 +108,7 @@ export default function App(){
             <Button
                 className={viewCompleted ? "" : "active"}
                 onPress={() => 
-                    displayCompleted=false}
+                    displayCompleted(false)}
                 title="All Songs"
                 color="#841584"
                 accessibilityLabel="Click this button to see all songs"
@@ -242,12 +242,11 @@ export default function App(){
                 Music Rater
               </Text>
 
-            
-              {renderTabList()}
               {renderItems()}
+              {renderTabList()}
+              
               <View>
-                {/*renderTabList()*/}
-                {/*renderItems()*/}
+                
                 <Text style={StyleSheet.title}>
                   The title and onPress handler are required
                 </Text>
@@ -260,13 +259,17 @@ export default function App(){
                 />
                 <Text> {modal}</Text>
               </View>
-              
-        
-            {modal ? (<Modal
-              activeItem={setActiveItem()}
-              onSave={handleSubmit()}
-              toggle={toggle()}/>):null}
             
+            
+            
+        
+            
+            {modal ? (<CustomModal
+              activeItem={activeItem}
+              toggle={toggle}
+              onSave={handleSubmit}
+              
+              />):null}
             
 
             
