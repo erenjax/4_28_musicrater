@@ -125,7 +125,7 @@ export default function App(){
     //from React App.js, NEED TO CHANGE HTML UI TO JSX
   renderItems = () => {
       console.log("renderItems");
-      const [ viewCompleted ] = useState();
+      const [ viewCompleted ] = useState(true);
       var newItems = {};
       if (viewCompleted){
        newItems = RatingList.filter(
@@ -135,9 +135,10 @@ export default function App(){
       else {
          newItems = RatingList;
       }
+      newItems=RatingList;
 
       return newItems.map((item) => (
-        <li
+        <View>
           key={item}
           className="list-group-item d-flex justify-content-between align-items-center"
         >
@@ -147,7 +148,7 @@ export default function App(){
             }`}
             title={item.artist}
           >
-            {item.song}, {item.artist}, {item.rating}, {this.average(item)}
+            {item.song}, {item.artist}, {item.rating}
           </FlatList>
           
           <View>
@@ -167,7 +168,7 @@ export default function App(){
                   accessibilityLabel="Delete a rated song"
                 />
           </View>
-        </li>
+        </View>
       ));
     };
     //From React App.js
@@ -179,17 +180,19 @@ export default function App(){
     //this.setState({ modal: !this.state.modal });
 
     //from React App.js
-  handleSubmit = (item) => {
-      console.log({item});
+  handleSubmit = (activeItem) => {
+      console.log(song);
+      setActiveItem((username,song,artist,rating));
+      console.log({activeItem});
       toggle();
-      {/*if (song) {
+      {/*{if (song) {
         axios
         .put(`http://localhost:8000/api/userrating/${song}/`, item)
         .then((res) => refreshList())
         return;
       } else {*/}
         axios
-        .post("http://localhost:8000/api/userrating/", item)
+        .post("http://localhost:8000/api/userrating/", ({username,song,artist,rating}))
         .then((res) => {
           refreshList(),
           setIsDup(false)})
@@ -197,6 +200,7 @@ export default function App(){
             console.log("catch error handle Submit")})
         
         };
+      
       
     
 
@@ -228,7 +232,8 @@ export default function App(){
     setModal(!modal) 
     };
 
-    handleChange = (text) => {
+  const handleChange = (text) => {
+      console.log({text})
       let {name, value} = text;
         if (text === "checkbox") {
             value=text.checked;
@@ -305,10 +310,10 @@ export default function App(){
                 placeholder="rating"
                 keyboardType="numeric" />
 
-              
+              <Text>{song},{artist}</Text>
               
             </View><Text style={StyleSheet.instructions}>Save</Text><Button
-                onPress={()=>handleSubmit(activeItem)}
+                onPress={handleSubmit}
                 title="Save"
                 color="#841584"
                 accessibilityLabel="Click this button to submit your song rating" /></>
